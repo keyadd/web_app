@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"strconv"
@@ -78,4 +79,65 @@ func GetPostListHandler(c *gin.Context) {
 	//返回响应
 	utils.ResponseSuccess(c, data)
 
+}
+
+//GetPostListHandler 获取帖子列表的处理方法
+func GetPostListHandler2(c *gin.Context) {
+
+	//分页参数
+	p := &request.PostList{
+		request.PageInfo{
+			Page:     1,
+			PageSize: 10,
+		},
+		request.OrderTime,
+	} //获取数据
+	if err := c.ShouldBind(p); err != nil {
+		global.GVA_LOG.Error("GetPostListHandler2 with invalid params", zap.Error(err))
+		utils.ResponseError(c, global.CodeInvalidParam)
+		return
+	}
+
+	fmt.Println(p)
+	data, err := service.GetPostList2(p)
+	if err != nil {
+		global.GVA_LOG.Error("service.GetPostList() failed", zap.Error(err))
+		utils.ResponseError(c, global.CodeServerBusy)
+		return
+	}
+
+	//返回响应
+	utils.ResponseSuccess(c, data)
+
+}
+
+//根据社区去查询
+func GetCommunityPostList(c *gin.Context) {
+
+	//分页参数
+	p := &request.CommunityPostList{
+		PostList: request.PostList{
+			PageInfo: request.PageInfo{
+				Page:     1,
+				PageSize: 10,
+			},
+			Order: request.OrderTime,
+		},
+	} //获取数据
+	if err := c.ShouldBind(p); err != nil {
+		global.GVA_LOG.Error("GetPostListHandler2 with invalid params", zap.Error(err))
+		utils.ResponseError(c, global.CodeInvalidParam)
+		return
+	}
+
+	fmt.Println(p)
+	data, err := service.GetCommunityPostList(p)
+	if err != nil {
+		global.GVA_LOG.Error("service.GetPostList() failed", zap.Error(err))
+		utils.ResponseError(c, global.CodeServerBusy)
+		return
+	}
+
+	//返回响应
+	utils.ResponseSuccess(c, data)
 }

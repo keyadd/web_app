@@ -3,6 +3,7 @@ package model
 import (
 	"database/sql"
 	"errors"
+	"github.com/jmoiron/sqlx"
 	"web_app/global"
 	"web_app/model/response"
 	"web_app/utils"
@@ -62,4 +63,26 @@ func GetUserById(uid int64) (user *response.User, err error) {
 	err = global.SQLX_DB.Get(user, sqlStr, uid)
 	return
 
+}
+
+//批量查询用户信息
+func GetUserInfoList(userIdList []int64) (userInfoList []*response.UserInfo, err error) {
+
+	if len(userIdList) == 0 {
+		return
+	}
+	sqlstr := `select user_id, gender, username, email from user where user_id in(?)`
+	var userIdTmpArr []interface{}
+	for _, userId := range userIdList {
+		userIdTmpArr = append(userIdTmpArr, userId)
+	}
+	query, args, err := sqlx.In(sqlstr, userIdTmpArr)
+	if err != nil {
+		return nil, err
+	}
+	err = global.SQLX_DB.Select(&userInfoList, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	return
 }

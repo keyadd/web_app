@@ -20,7 +20,7 @@ func CreatePost(p *request.Post) (err error) {
 		return err
 	}
 
-	err = redis.CreatePost(p.ID)
+	err = redis.CreatePost(p.ID, p.CommunityID)
 	return
 
 	//返回
@@ -64,6 +64,101 @@ func GetPostList(page int64, size int64) (data []*response.ApiPostDetail, err er
 		return nil, err
 	}
 	data = make([]*response.ApiPostDetail, 0, len(posts))
+
+	for _, post := range posts {
+
+		user, err := model.GetUserById(post.AuthorID)
+		if err != nil {
+			global.GVA_LOG.Error("model.GetUserById(post.AuthorID) failed", zap.Int64("author_id", post.AuthorID), zap.Error(err))
+			continue
+		}
+		//查询社区详细
+		community, err := model.GetCommunityDetailByID(post.CommunityID)
+		if err != nil {
+			global.GVA_LOG.Error("model.GetCommunityDetailByID(post.CommunityID) failed", zap.Int64("community_id", post.CommunityID), zap.Error(err))
+			continue
+
+		}
+		postdetail := &response.ApiPostDetail{
+			AuthorName:      user.Username,
+			Post:            post,
+			CommunityDetail: community,
+		}
+		fmt.Println(postdetail)
+
+		data = append(data, postdetail)
+	}
+	return
+}
+
+//GetPostList 获取帖子列表
+func GetPostList2(p *request.PostList) (data []*response.ApiPostDetail, err error) {
+	//	redis查询id列表
+
+	result, err := redis.GetPostList(p)
+	if err != nil {
+		return
+	}
+
+	global.GVA_LOG.Debug("GetPostList2 redis.GetPostList(p) result data", zap.Any("Post_Id", result))
+	if len(result) == 0 {
+		global.GVA_LOG.Warn("GetPostList2 redis.GetPostList(p) return 0 data")
+		return
+	}
+
+	posts, err := model.GetPostListById(result)
+	if err != nil {
+		return
+	}
+
+	//根据id去数据库查询帖子
+
+	for _, post := range posts {
+
+		user, err := model.GetUserById(post.AuthorID)
+		if err != nil {
+			global.GVA_LOG.Error("model.GetUserById(post.AuthorID) failed", zap.Int64("author_id", post.AuthorID), zap.Error(err))
+			continue
+		}
+		//查询社区详细
+		community, err := model.GetCommunityDetailByID(post.CommunityID)
+		if err != nil {
+			global.GVA_LOG.Error("model.GetCommunityDetailByID(post.CommunityID) failed", zap.Int64("community_id", post.CommunityID), zap.Error(err))
+			continue
+
+		}
+		postdetail := &response.ApiPostDetail{
+			AuthorName:      user.Username,
+			Post:            post,
+			CommunityDetail: community,
+		}
+		fmt.Println(postdetail)
+
+		data = append(data, postdetail)
+	}
+	return
+}
+
+func GetCommunityPostList(p *request.CommunityPostList) (data []*response.ApiPostDetail, err error) {
+	//	redis查询id列表
+
+	result, err := redis.GetCommunityPostList(p)
+	if err != nil {
+		return
+	}
+
+	global.GVA_LOG.Debug("GetPostList2 redis.GetPostList(p) result data", zap.Any("Post_Id", result))
+	if len(result) == 0 {
+		global.GVA_LOG.Warn("GetPostList2 redis.GetPostList(p) return 0 data")
+		return
+	}
+
+	posts, err := model.GetPostListById(result)
+	if err != nil {
+		return
+	}
+
+	//根据id去数据库查询帖子
 
 	for _, post := range posts {
 

@@ -34,6 +34,7 @@ func PostVoteController(c *gin.Context) {
 	if err := service.VoteForPost(userID, p); err != nil {
 		global.GVA_LOG.Error("service.VoteForPost(userID, p) failed", zap.Error(err))
 		utils.ResponseError(c, global.CodeServerBusy)
+		return
 	}
 	utils.ResponseSuccess(c, nil)
 
