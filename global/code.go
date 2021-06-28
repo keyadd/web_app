@@ -11,6 +11,7 @@ const (
 	CodeServerBusy
 	CodeNeedLogin
 	CodeInvalidToken
+	CodeBeginxError
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -22,6 +23,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeServerBusy:      "服务繁忙",
 	CodeNeedLogin:       "需要登录",
 	CodeInvalidToken:    "无效Token",
+	CodeBeginxError:     " beginx is error",
 }
 
 func (c ResCode) Msg() string {
