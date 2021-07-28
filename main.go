@@ -16,6 +16,16 @@ import (
 	"web_app/validator"
 )
 
+// @title web_app
+// @version 0.0.1
+// @description This is a sample Server pets
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name x-token
+// @BasePath /
+
+// @host 127.0.0.1:8888
+
 func main() {
 	//加载配置文件
 	global.GVA_VP = core.Viper()
@@ -65,5 +75,4 @@ func main() {
 		global.GVA_LOG.Fatal("Server Shutdown: ", zap.Error(err))
 	}
 	global.GVA_LOG.Info("Server exiting")
-
 }

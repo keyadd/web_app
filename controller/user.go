@@ -12,6 +12,13 @@ import (
 	"web_app/utils"
 )
 
+// @Tags Base
+// @Summary 用户注册
+// @Produce  application/json
+// @Param data body request.ParamSignUp true "用户名, 用户密码，确认密码"
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Success 200 {string} string "{"code": 1000,"msg": "success","data": ""}"
+// @Router /api/v1/signup [post]
 func SignUpHandler(c *gin.Context) {
 	//1.参数校验
 	var p = new(request.ParamSignUp)
@@ -41,12 +48,18 @@ func SignUpHandler(c *gin.Context) {
 
 	//3.返回响应
 	utils.ResponseSuccess(c, nil)
-
 }
 
+// @Tags Base
+// @Summary 用户登录
+// @Produce  application/json
+// @Param data body request.ParamLogin true "用户名, 密码"
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Success 200 {string} string "{"code": 1000,"msg": "success","data": ""}"
+// @Router /api/v1/login [post]
 func LoginHandler(c *gin.Context) {
 	//获取请求参数及参数校验
-	p := new(request.ParamLogin)
+	p := &request.ParamLogin{}
 
 	if err := c.ShouldBindJSON(p); err != nil {
 		global.GVA_LOG.Error("Login with invalid param", zap.Error(err))
@@ -66,6 +79,7 @@ func LoginHandler(c *gin.Context) {
 
 		if errors.Is(err, model.ErrorUserNotExist) {
 			utils.ResponseError(c, global.CodeUserNotExist)
+			return
 		}
 		utils.ResponseError(c, global.CodeInvalidPassword)
 		return
