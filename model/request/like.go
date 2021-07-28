@@ -1,10 +1,11 @@
 package request
 
 const (
-	LikeType
+//LikeType
+
 )
 
 type Like struct {
 	Id       int64 `json:"id"`
-	LikeType int `json:"like_type"`
+	LikeType int   `json:"like_type"`
 }
