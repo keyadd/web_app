@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 	"web_app/global"
 )
@@ -35,6 +36,16 @@ func ResponseErrorWithMsg(c *gin.Context, code global.ResCode, msg interface{}) 
 	rd := &ResponseData{
 		Code: code,
 		Msg:  msg,
+		Data: nil,
+	}
+	c.JSON(http.StatusOK, rd)
+}
+
+func ResponseErrorWithMsgValid(c *gin.Context, code global.ResCode, msg interface{}) {
+
+	rd := &ResponseData{
+		Code: code,
+		Msg:  RemoveTopStruct(msg.(validator.ValidationErrorsTranslations)),
 		Data: nil,
 	}
 	c.JSON(http.StatusOK, rd)

@@ -56,7 +56,7 @@ func Login(user *response.User) (err error) {
 	return
 }
 
-//根据id 获取用户信息
+// GetUserById 根据id 获取用户信息
 func GetUserById(uid int64) (user *response.User, err error) {
 	user = new(response.User)
 	sqlStr := `select user_id,username from user where user_id=?`
@@ -65,7 +65,7 @@ func GetUserById(uid int64) (user *response.User, err error) {
 
 }
 
-//批量查询用户信息
+// GetUserInfoList 批量查询用户信息
 func GetUserInfoList(userIdList []int64) (userInfoList []*response.UserInfo, err error) {
 
 	if len(userIdList) == 0 {

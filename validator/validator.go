@@ -2,9 +2,6 @@ package validator
 
 import (
 	"fmt"
-	"reflect"
-	"strings"
-
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"
 	"github.com/go-playground/locales/zh"
@@ -12,6 +9,8 @@ import (
 	"github.com/go-playground/validator/v10"
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
+	"reflect"
+	"strings"
 )
 
 // 定义一个全局翻译器T
@@ -20,7 +19,11 @@ var trans ut.Translator
 // InitTrans 初始化翻译器
 func InitTrans(locale string) (trans ut.Translator) {
 	// 修改gin框架中的Validator引擎属性，实现自定制
+	//var ok bool
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+
+		//自定义验证方法
+		LoginV(v)
 
 		// 注册一个获取json tag的自定义方法
 		v.RegisterTagNameFunc(func(fld reflect.StructField) string {
@@ -63,15 +66,6 @@ func InitTrans(locale string) (trans ut.Translator) {
 
 	}
 	return trans
-}
-
-// removeTopStruct 去除提示信息中的结构体名称
-func removeTopStruct(fields map[string]string) map[string]string {
-	res := map[string]string{}
-	for field, err := range fields {
-		res[field[strings.Index(field, ".")+1:]] = err
-	}
-	return res
 }
 
 // SignUpParamStructLevelValidation 自定义SignUpParam结构体校验函数

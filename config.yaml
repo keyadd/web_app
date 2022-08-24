@@ -1,7 +1,7 @@
 
 system:
   env: 'public'  # Change to "develop" to skip authentication for development mode
-  addr: 8888
+  addr: 8881
   db-type: 'mysql'
 name: "web_app"
 port: 8081

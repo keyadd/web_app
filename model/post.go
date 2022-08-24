@@ -14,7 +14,7 @@ func CreatePost(p *request.Post) (err error) {
 
 }
 
-//查询单篇帖子的数据
+// GetPostById 查询单篇帖子的数据
 func GetPostById(pid int64) (data *request.Post, err error) {
 	post := new(request.Post)
 	sqlStr := `select post_id,title,content,author_id,community_id,create_time from post where post_id =?`

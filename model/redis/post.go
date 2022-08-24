@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 	"strconv"
 	"time"
@@ -30,8 +31,10 @@ func GetCommunityPostList(p *request.CommunityPostList) ([]string, error) {
 	}
 
 	cKey := GetRedisKey(keyCommunityZSetPrefix + strconv.Itoa(int(p.CommunityId)))
+	fmt.Println(cKey)
 
 	key := orderKey + strconv.Itoa(int(p.CommunityId))
+	fmt.Println(key)
 	if global.GVA_REDIS.Exists(key).Val() < 1 {
 		pipeline := global.GVA_REDIS.Pipeline()
 		pipeline.ZInterStore(key, redis.ZStore{

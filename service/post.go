@@ -143,6 +143,7 @@ func GetCommunityPostList(p *request.CommunityPostList) (data []*response.ApiPos
 	//	redis查询id列表
 
 	result, err := redis.GetCommunityPostList(p)
+	fmt.Println(result)
 	if err != nil {
 		return
 	}

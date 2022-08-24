@@ -91,7 +91,7 @@ func InsertPostReply(p *response.PostComment) (err error) {
 
 }
 
-//查询评论的作者的author_id
+// SelectPostComment 查询评论的作者的author_id
 func SelectPostComment(p *response.PostCommentRel) (AuthorId int64, err error) {
 	var replyAuthorId int64
 	sqlStr := `select author_id from comment where comment_id = ?`
@@ -100,8 +100,7 @@ func SelectPostComment(p *response.PostCommentRel) (AuthorId int64, err error) {
 	return replyAuthorId, err
 }
 
-//查询评论第一层列表
-
+// SelectCommentList 查询评论第一层列表
 func SelectCommentList(p *request.GetByPostId) (apicommentList *response.ApiCommentList, err error) {
 	var commentIdList []int64
 

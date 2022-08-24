@@ -12,7 +12,7 @@ import (
 	"time"
 	"web_app/core"
 	"web_app/global"
-	"web_app/route"
+	"web_app/router"
 	"web_app/validator"
 )
 
@@ -44,7 +44,7 @@ func main() {
 	global.TRANS = validator.InitTrans("zh")
 
 	//注册路由
-	r := route.Setup()
+	r := router.Setup()
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", global.GVA_CONFIG.System.Addr),

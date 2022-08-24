@@ -3,8 +3,8 @@ package request
 import "time"
 
 const (
-	OrderTime  = "time"
-	OrderScore = "score"
+	OrderTime  = "time"  //时间
+	OrderScore = "score" //文章是否火热
 )
 
 type Post struct {
@@ -17,7 +17,7 @@ type Post struct {
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 }
 
-//帖子列表参数获取
+// PostList 帖子列表参数获取
 type PostList struct {
 	PageInfo
 	Order string `json:"order" form:"order"`
