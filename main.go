@@ -13,6 +13,7 @@ import (
 	"web_app/core"
 	"web_app/global"
 	"web_app/router"
+	"web_app/utils"
 	"web_app/validator"
 )
 
@@ -42,6 +43,11 @@ func main() {
 	core.Snowflake()
 	//validator参数验证
 	global.TRANS = validator.InitTrans("zh")
+
+	// 初使化 minio client对象
+	global.MINIO = core.InitMinIO()
+
+	utils.CreateMinoBuket("userheader")
 
 	//注册路由
 	r := router.Setup()

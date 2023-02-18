@@ -8,7 +8,7 @@ import (
 	"web_app/global"
 )
 
-// Init 初始化MySQL连接
+// Sqlx Init 初始化MySQL连接
 func Sqlx() (db *sqlx.DB) {
 	// "user:password@tcp(host:port)/dbname"
 	//dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&loc=Local", global.GVA_CONFIG.Mysql.Username, cfg.Password, cfg.Host, cfg.Port, cfg.DB)

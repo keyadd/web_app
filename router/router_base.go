@@ -14,7 +14,7 @@ import (
 
 func Setup() *gin.Engine {
 	r := gin.New()
-	r.Use(middleware.CorsMiddleware()).Use(middleware.GinLogger()).Use(middleware.GinRecovery(true))
+	r.Use(middleware.CorsMiddleware()).Use(middleware.GinLogger()).Use(middleware.GinRecovery(true)).Use(middleware.Sentinel())
 	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 
 	global.GVA_LOG.Info("register swagger handler")

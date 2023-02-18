@@ -1,4 +1,4 @@
-package api
+package v1
 
 import (
 	"fmt"
@@ -111,7 +111,7 @@ func GetPostListHandler2(c *gin.Context) {
 
 }
 
-//根据社区去查询
+// GetCommunityPostList 根据社区去查询
 func GetCommunityPostList(c *gin.Context) {
 
 	//分页参数

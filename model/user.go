@@ -71,7 +71,7 @@ func GetUserInfoList(userIdList []int64) (userInfoList []*response.UserInfo, err
 	if len(userIdList) == 0 {
 		return
 	}
-	sqlstr := `select user_id, gender, username, email from user where user_id in(?)`
+	sqlstr := `select user_id, gender, username, email from  user where user_id in(?)`
 	var userIdTmpArr []interface{}
 	for _, userId := range userIdList {
 		userIdTmpArr = append(userIdTmpArr, userId)

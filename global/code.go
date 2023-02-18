@@ -12,6 +12,9 @@ const (
 	CodeNeedLogin
 	CodeInvalidToken
 	CodeBeginxError
+	ImageUpdateError
+	ImageGetError
+	ImageFormatError
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -24,6 +27,9 @@ var codeMsgMap = map[ResCode]string{
 	CodeNeedLogin:       "需要登录",
 	CodeInvalidToken:    "无效Token",
 	CodeBeginxError:     " beginx is error",
+	ImageUpdateError:    "图片上传失败",
+	ImageGetError:       "获取用户头像失败",
+	ImageFormatError:    "上传文件格式不支持",
 }
 
 func (c ResCode) Msg() string {

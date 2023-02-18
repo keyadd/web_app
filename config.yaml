@@ -42,3 +42,9 @@ redis:
   db: 0
   password: "toor"
 
+
+minio:
+  endpoint: "127.0.0.1:9000"
+  accessKeyID: "1BYtcmFq9NY8BsYm"
+  secretAccessKey: "0S9W9oQ8tPwtO94JLbBN38Ulk2fRUb8I"
+  secure: false

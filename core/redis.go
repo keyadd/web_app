@@ -10,7 +10,7 @@ import (
 
 var conn *redis.Client
 
-// Init 初始化连接
+// Redis Init 初始化连接
 func Redis() (conn *redis.Client) {
 	redisCfg := global.GVA_CONFIG.Redis
 	conn = redis.NewClient(&redis.Options{
